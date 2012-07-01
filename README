@@ -1,0 +1,3 @@
+To execute the Maven build you will need to add the 1060 JARs to your local repository:
+
+Unzip 1060.zip to $REPOSITORY_HOME (for location of local repository see $HOME_MAVEN/conf/settings.xml)

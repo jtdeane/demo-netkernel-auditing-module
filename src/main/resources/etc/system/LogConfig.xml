@@ -1,0 +1,22 @@
+<log>
+	<id>cogito.security.auditing</id>
+	<name>Auditing Log</name>
+	<handlers>
+		<handler>
+			<instance>
+				<class>org.netkernel.layer0.logging.LogFileHandler</class>
+				<string>%b/log/orders-%g.log</string>
+				<int>50000000</int>
+				<int>4</int>
+				<boolean>true</boolean>
+			</instance>
+			<formatterClass>org.netkernel.layer0.logging.XMLFormatter</formatterClass>
+		</handler>
+		<handler>
+			<instance>
+				<class>java.util.logging.ConsoleHandler</class>
+			</instance>
+			<formatterClass>org.netkernel.layer0.logging.ConsoleFormatter</formatterClass>
+		</handler>
+	</handlers>
+</log>

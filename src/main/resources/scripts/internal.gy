@@ -1,0 +1,17 @@
+import org.netkernel.layer0.nkf.INKFRequestContext;
+
+
+//mock name map
+internalNames = [ "Paypal":"Billing", "Fidelity":"Billing", "Billing":"Billing", "Claims":"Claims"]
+
+//external name argurment
+externalName = context.getThisRequest().getArgumentValue("name")
+
+context.logRaw(INKFRequestContext.LEVEL_DEBUG, "External Name: " + externalName);
+
+//mapped internal name
+internalName = internalNames[externalName]
+
+context.logRaw(INKFRequestContext.LEVEL_DEBUG, "Internal Name: " + internalName);
+
+response = context.createResponseFrom(internalName)

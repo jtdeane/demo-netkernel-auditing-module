@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="2.0">
+    <meta>
+        <identity>
+            <uri>urn:cogito:security:auditing</uri>
+            <version>1.0.0</version>
+        </identity>
+        <info>
+            <name>Auditing</name>
+            <description>Audit Processing</description>
+            <icon>res:/cogito/security/pub/cogito-logo.gif</icon>
+        </info>
+    </meta>
+    <rootspace public="true" uri="urn:cogito:security:auditing">
+        
+        <!-- Endpoints -->
+        <accessor>
+            <!-- Example: res:/cogito/security/audit/event/{Audit Event ID} -->
+			<grammar>
+			    <group name="AuditEventID">
+				    res:/cogito/security/audit/event/
+				    <group name="eventID">
+				        <regex type="alphanum"/>
+				    </group>
+				    <regex type="anything"/>
+			    </group>
+			 </grammar>
+			 <class>cogito.security.SecurityAccessor</class>
+        </accessor>
+        
+        <accessor>
+            <!-- Example: res:/cogito/security/uber/event/{Audit Event ID} -->
+            <grammar>
+                <group name="AuditEventID">
+                    res:/cogito/security/uber/event/
+                    <group name="eventID">
+                        <regex type="alphanum"/>
+                    </group>
+                    <regex type="anything"/>
+                </group>
+             </grammar>
+             <class>cogito.security.UberSecurityAcessor</class>
+        </accessor>
+        
+        <accessor>
+            <!-- Example: res:/cogito/security/pii/audit -->
+            <grammar>
+                <group name="PIIText">
+                    res:/cogito/security/pii/audit+text@
+                    <group name="text">
+                        <regex>.*</regex>
+                    </group>
+                </group>
+             </grammar>
+             <class>cogito.security.PIIAccessor</class>
+        </accessor>
+        
+        <mapper>
+            <config>
+            <!-- Example: rest:/cogito/security/internal/{name} -->
+                <endpoint>
+                    <grammar>
+                        <group name="ExternalName">
+                            res:/cogito/security/internal/
+		                    <group name="name">
+			                      <regex type="alphanum"/>
+                            </group>
+		                    <regex type="anything"/>
+		                </group>
+		             </grammar>
+		             <request>
+				        <identifier>active:groovy</identifier>
+						<argument name="operator">res:/scripts/internal.gy</argument>
+						<argument name="name">arg:name</argument>
+					 </request>
+				</endpoint>
+			</config>
+			<space>
+				<fileset>
+					<private />
+					<regex>res:/scripts/.*</regex>
+				</fileset>
+				<import>
+					<private />
+					<uri>urn:org:netkernel:lang:groovy</uri>
+				</import>
+				<import>
+					<private />
+					<uri>urn:org:netkernel:ext:layer1</uri>
+				</import>
+			</space>
+        </mapper>                        
+
+        <!-- Dynamic Import: HTTP Fulcrum --> 
+        <fileset>
+            <regex>res:/etc/system/SimpleDynamicImportHook.xml</regex>
+        </fileset>            
+        <!-- Module Icon -->   
+        <fileset>
+            <regex>res:/cogito/security/pub/(.*)</regex>
+            <rewrite>res:/pub/$1</rewrite>
+        </fileset>
+        <!-- Import public rootspaces from other modules --> 
+        <import>
+            <uri>urn:org:netkernel:ext:layer1</uri>
+        </import>
+        <import>
+            <uri>urn:org:netkernel:xml:core</uri>
+         </import>
+		<import>
+		   <uri>urn:org:netkernel:client:http</uri>
+		</import>         
+    </rootspace>
+</module>

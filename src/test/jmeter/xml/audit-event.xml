@@ -1,0 +1,5 @@
+<audit-event>
+	<application>Billing</application>
+	<time>201210201650</time>
+	<message>Late Payment Fee</message>
+</audit-event>
